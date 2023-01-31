@@ -1,0 +1,298 @@
+<!DOCTYPE HTML><html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <style>
+    body {
+      min-width: 310px;
+    	max-width: 800px;
+    	height: 400px;
+      margin: 0 auto;
+    }
+    h2 {
+      font-family: Arial;
+      font-size: 2.5rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2>Energy Meter</h2>
+  <div id="chart-Energy" class="container"></div>
+  <div id="chart-Vrms" class="container"></div>
+  <div id="chart-Irms" class="container"></div>
+  <div id="chart-P" class="container"></div>
+  <div id="chart-Q" class="container"></div>
+  <div id="chart-S" class="container"></div>
+  <div id="chart-PF" class="container"></div>
+</body>
+<script>
+var chartEnergy = new Highcharts.Chart({
+  chart:{ renderTo : 'chart-Energy' },
+  title: { text: 'Energy' },
+  series: [{
+    showInLegend: false,
+    data: []
+  }],
+  plotOptions: {
+    line: { animation: false,
+      dataLabels: { enabled: true }
+    },
+    series: { color: '#059e8a' }
+  },
+  xAxis: { type: 'datetime',
+    dateTimeLabelFormats: { second: '%H:%M:%S' }
+  },
+  yAxis: {
+    title: { text: 'Energy consumed (Ws)' }
+  },
+  credits: { enabled: false }
+});
+setInterval(function ( ) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var x = (new Date()).getTime(),
+          y = parseFloat(this.responseText);
+      if(chartEnergy.series[0].data.length > 40) {
+        chartEnergy.series[0].addPoint([x, y], true, true, true);
+      } else {
+        chartEnergy.series[0].addPoint([x, y], true, false, true);
+      }
+    }
+  };
+  xhttp.open("GET", "/Energy", true);
+  xhttp.send();
+}, 500 ) ;
+
+var chartVrms = new Highcharts.Chart({
+  chart:{ renderTo : 'chart-Vrms' },
+  title: { text: 'Vrms' },
+  series: [{
+    showInLegend: false,
+    data: []
+  }],
+  plotOptions: {
+    line: { animation: false,
+      dataLabels: { enabled: true }
+    },
+    series: { color: '#059e8a' }
+  },
+  xAxis: { type: 'datetime',
+    dateTimeLabelFormats: { second: '%H:%M:%S' }
+  },
+  yAxis: {
+    title: { text: 'Voltage (Volts)' }
+  },
+  credits: { enabled: false }
+});
+setInterval(function ( ) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var x = (new Date()).getTime(),
+          y = parseFloat(this.responseText);
+      if(chartVrms.series[0].data.length > 40) {
+        chartVrms.series[0].addPoint([x, y], true, true, true);
+      } else {
+        chartVrms.series[0].addPoint([x, y], true, false, true);
+      }
+    }
+  };
+  xhttp.open("GET", "/Vrms", true);
+  xhttp.send();
+}, 500 ) ;
+
+var chartIrms = new Highcharts.Chart({
+  chart:{ renderTo:'chart-Irms' },
+  title: { text: 'Irms' },
+  series: [{
+    showInLegend: false,
+    data: []
+  }],
+  plotOptions: {
+    line: { animation: false,
+      dataLabels: { enabled: true }
+    }
+  },
+  xAxis: {
+    type: 'datetime',
+    dateTimeLabelFormats: { second: '%H:%M:%S' }
+  },
+  yAxis: {
+    title: { text: 'Current (Amps)' }
+  },
+  credits: { enabled: false }
+});
+setInterval(function ( ) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var x = (new Date()).getTime(),
+          y = parseFloat(this.responseText);
+      if(chartIrms.series[0].data.length > 40) {
+        chartIrms.series[0].addPoint([x, y], true, true, true);
+      } else {
+        chartIrms.series[0].addPoint([x, y], true, false, true);
+      }
+    }
+  };
+  xhttp.open("GET", "/Irms", true);
+  xhttp.send();
+}, 500 ) ;
+
+var chartP = new Highcharts.Chart({
+  chart:{ renderTo:'chart-P' },
+  title: { text: 'P' },
+  series: [{
+    showInLegend: false,
+    data: []
+  }],
+  plotOptions: {
+    line: { animation: false,
+      dataLabels: { enabled: true }
+    },
+    series: { color: '#18009c' }
+  },
+  xAxis: {
+    type: 'datetime',
+    dateTimeLabelFormats: { second: '%H:%M:%S' }
+  },
+  yAxis: {
+    title: { text: 'Active Power (W)' }
+  },
+  credits: { enabled: false }
+});
+setInterval(function ( ) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var x = (new Date()).getTime(),
+          y = parseFloat(this.responseText);
+      if(chartP.series[0].data.length > 40) {
+        chartP.series[0].addPoint([x, y], true, true, true);
+      } else {
+        chartP.series[0].addPoint([x, y], true, false, true);
+      }
+    }
+  };
+  xhttp.open("GET", "/P", true);
+  xhttp.send();
+}, 500 ) ;
+  
+  var chartQ = new Highcharts.Chart({
+  chart:{ renderTo:'chart-Q' },
+  title: { text: 'Q' },
+  series: [{
+    showInLegend: false,
+    data: []
+  }],
+  plotOptions: {
+    line: { animation: false,
+      dataLabels: { enabled: true }
+    }
+  },
+  xAxis: {
+    type: 'datetime',
+    dateTimeLabelFormats: { second: '%H:%M:%S' }
+  },
+  yAxis: {
+    title: { text: 'Reactive Power (VAr)' }
+  },
+  credits: { enabled: false }
+});
+setInterval(function ( ) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var x = (new Date()).getTime(),
+          y = parseFloat(this.responseText);
+      if(chartQ.series[0].data.length > 40) {
+        chartQ.series[0].addPoint([x, y], true, true, true);
+      } else {
+        chartQ.series[0].addPoint([x, y], true, false, true);
+      }
+    }
+  };
+  xhttp.open("GET", "/Q", true);
+  xhttp.send();
+}, 500 ) ;
+  
+  var chartS = new Highcharts.Chart({
+  chart:{ renderTo:'chart-S' },
+  title: { text: 'S' },
+  series: [{
+    showInLegend: false,
+    data: []
+  }],
+  plotOptions: {
+    line: { animation: false,
+      dataLabels: { enabled: true }
+    }
+  },
+  xAxis: {
+    type: 'datetime',
+    dateTimeLabelFormats: { second: '%H:%M:%S' }
+  },
+  yAxis: {
+    title: { text: 'Apparent Power (VA)' }
+  },
+  credits: { enabled: false }
+});
+setInterval(function ( ) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var x = (new Date()).getTime(),
+          y = parseFloat(this.responseText);
+      //console.log(this.responseText);
+      if(chartS.series[0].data.length > 40) {
+        chartS.series[0].addPoint([x, y], true, true, true);
+      } else {
+        chartS.series[0].addPoint([x, y], true, false, true);
+      }
+    }
+  };
+  xhttp.open("GET", "/S", true);
+  xhttp.send();
+}, 500 ) ;
+  
+  var chartPF = new Highcharts.Chart({
+  chart:{ renderTo:'chart-PF' },
+  title: { text: 'Power Factor' },
+  series: [{
+    showInLegend: false,
+    data: []
+  }],
+  plotOptions: {
+    line: { animation: false,
+      dataLabels: { enabled: true }
+    }
+  },
+  xAxis: {
+    type: 'datetime',
+    dateTimeLabelFormats: { second: '%H:%M:%S' }
+  },
+  yAxis: {
+    title: { text: 'PF (/1)' }
+  },
+  credits: { enabled: false }
+});
+setInterval(function ( ) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var x = (new Date()).getTime(),
+          y = parseFloat(this.responseText);
+      if(chartPF.series[0].data.length > 40) {
+        chartPF.series[0].addPoint([x, y], true, true, true);
+      } else {
+        chartPF.series[0].addPoint([x, y], true, false, true);
+      }
+    }
+  };
+  xhttp.open("GET", "/PF", true);
+  xhttp.send();
+}, 500 ) ;
+</script>
+</html>
