@@ -51,4 +51,12 @@ variables (VRMS, IRMS, P, Q, S, PF). These variables are the ones called by the 
 handlers
 
 ### HTML File
-
+The file uses HTML language to set up the charts and give the web page a structure. It consists of seven charts implemented using the library Highcharts. Its is included as JavaScrip
+language in the code. Seven dynamic charts are created to represent the seven variables.
+The charts, which act as the web client on the server, automatically produce seven HTML
+requests using an URL pointing to the file stored in the SPIFFS that holds the host and path
+for the data stored in the ESP32 memory every 500 milliseconds. The handlers stored in
+the microcontroller send the respective variable value to the client as an HTML text that is
+processed by the chart class and added to the plot. The new variables are represented against
+time thanks to a time capturing function included in the chart declarations. The axis update
+automatically when if a new value exceeds the previous limits.
