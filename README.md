@@ -1,6 +1,8 @@
 # EnergyMeter_WiFi_Com
-This repository holds the code used by the WiFi module of my Wattmeter project. The *PIC24FJ256GA110* integrated on the *MCP3910 Evaluation Board* used to aquire data does not support wireless communication by itself and requires an external source to provide it. 
+This repository holds the code used by the WiFi module of my Wattmeter project. The *PIC24FJ256GA110* integrated on the *MCP3910 Evaluation Board* used to aquire data does not support wireless communication by itself and requires an external source to provide it. The code for the data aquisition module as well as a detailed document with all the project information can be found [here](https://github.com/rucoma00/EnergyMeter).
 This design uses an ESP32 microcontroller that will read data sent by the PIC through an RS-232 wire and will transmits it via WiFi.
+
+![General shematic](Media/Wifi_module_assembly.jpg)
 
 ## Hardware design
 | Component | Device | Link |
@@ -18,6 +20,9 @@ in the SPI Flash File System SPIFFS of the ESP32. This is system lets the user a
 flash memory of the device as if it was a normal file system like the one implemented on a
 regular computer. The file contains the structure of the web application and the declaration
 of the charts where the variables will be represented and updates the graphs periodically.
+
+The following algorithm sumarizes the code in the *ESP32*:
+![General shematic](Media/CodigoESP.png)
 
 ### System configuration
 A serial port of the ESP32 needs to be configured in order to receive data from the other
@@ -60,3 +65,9 @@ the microcontroller send the respective variable value to the client as an HTML 
 processed by the chart class and added to the plot. The new variables are represented against
 time thanks to a time capturing function included in the chart declarations. The axis update
 automatically when if a new value exceeds the previous limits.
+
+## Web algorithm
+![General shematic](Media/PaginaWeb.png)
+
+## Graph example
+![General shematic](Media/RMS_adjustedPNG.PNG)
